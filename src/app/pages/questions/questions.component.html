@@ -1,0 +1,10 @@
+<div class="wrapper">
+  <div class="question-container" *ngIf="questionData">
+    {{ questionData.question }}
+  </div>
+  <div class="answers-container">
+    <button class="answer-btn" *ngFor="let answer of questionData.answers">
+      {{ answer }}
+    </button>
+  </div>
+</div>
