@@ -1,0 +1,15 @@
+<div class="wrapper">
+  <table>
+    <tr>
+      <th>Posizione</th>
+      <th>Giocatore</th>
+      <th>Punteggio</th>
+    </tr>
+    <tr *ngFor="let user of leaderboard.slice(0, 10); let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ user.user_name }}</td>
+      <td>{{ user.score }}</td>
+    </tr>
+  </table>
+  <app-button text="Homepage" (click)="goBack()"></app-button>
+</div>

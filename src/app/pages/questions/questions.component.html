@@ -1,10 +1,20 @@
 <div class="wrapper">
-  <div class="question-container" *ngIf="questionData">
-    {{ questionData.question }}
+  <app-timer-chart></app-timer-chart>
+  <div class="question-container" *ngIf="currentQuestion">
+    <span>{{ currentQuestion.question }}</span>
   </div>
-  <div class="answers-container">
-    <button class="answer-btn" *ngFor="let answer of questionData.answers">
-      {{ answer }}
-    </button>
+  <div class="answers-container" *ngIf="currentQuestion">
+    <app-button
+      class="answer-btn"
+      *ngFor="let option of currentOptions"
+      text="{{ option }}"
+      (click)="selectAnswer(option)"
+      [class.selected]="option === selectedAnswer"
+    >
+    </app-button>
+  </div>
+  <div class="questionsCounter">
+    <span>Domanda </span>
+    <span>{{ currentQuestionIndex + 1 }}/{{ questions.length }}</span>
   </div>
 </div>

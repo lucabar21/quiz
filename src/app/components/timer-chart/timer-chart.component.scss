@@ -1,0 +1,20 @@
+.timer {
+  width: 150px;
+  height: 150px;
+  position: relative;
+
+  canvas {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .time {
+    position: absolute;
+    left: 50%;
+    bottom: 47%;
+    transform: translate(-50%, 50%);
+    font-size: 4rem;
+    font-weight: 400;
+    color: var(--primary-color);
+  }
+}

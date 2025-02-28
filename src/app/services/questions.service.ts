@@ -1,30 +1,34 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface Question {
+  id: number;
+  category_id: number;
+  question: string;
+  options: string[];
+  correct_answer: string;
+  difficulty: string;
+  points: number;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuestionsService {
-  private apiURL = 'https://the-trivia-api.com/v2/questions';
+  private apiUrl = 'http://localhost:8000/api'; // URL del backend Laravel
 
   constructor(private http: HttpClient) {}
 
-  getQuestion(): Observable<any> {
-    return this.http.get<any[]>(this.apiURL).pipe(
-      map((questions) => {
-        if (questions.length > 0) {
-          return {
-            question: questions[0].question.text,
-            correctAnswer: questions[0].correctAnswer,
-            answers: [
-              questions[0].correctAnswer,
-              ...questions[0].incorrectAnswers,
-            ],
-          };
-        }
-        return null;
-      })
+  // Recupera tutte le domande
+  getQuestions(): Observable<Question[]> {
+    return this.http.get<Question[]>(`${this.apiUrl}/questions`);
+  }
+
+  // Recupera le domande per categoria
+  getQuestionsByCategory(categoryId: number): Observable<Question[]> {
+    return this.http.get<Question[]>(
+      `${this.apiUrl}/questions/category/${categoryId}`
     );
   }
 }

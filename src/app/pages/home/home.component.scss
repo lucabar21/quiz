@@ -1,0 +1,9 @@
+.wrapper {
+  width: 100%;
+  height: calc(100% - 96.7px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}

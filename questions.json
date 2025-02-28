@@ -4,13 +4,19 @@
       "id": "1",
       "question": "Dimensioni pisello del Tack",
       "options": ["10 cm", "15 cm", "20 cm", "non misurabile"],
-      "correctAnswer": "non misurabile"
+      "correctAnswer": "non misurabile",
+      "category": "Tack",
+      "difficulty": "hard",
+      "points": 5
     },
     {
       "id": "2",
       "question": "Dimensioni cervello del Marascio",
       "options": ["10 cm", "15 cm", "20 cm", "non misurabile"],
-      "correctAnswer": "non misurabile"
+      "correctAnswer": "non misurabile",
+      "category": "Marascio",
+      "difficulty": "medium",
+      "points": 3
     }
   ]
 }
