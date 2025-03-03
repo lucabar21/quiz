@@ -1,1 +1,103 @@
-<p>backoffice works!</p>
+<div class="wrapper">
+  <form
+    #questionForm="ngForm"
+    (ngSubmit)="
+      editingQuestion
+        ? updateQuestion(questionForm)
+        : createQuestion(questionForm)
+    "
+  >
+    <!-- Domanda -->
+    <div class="custom-input">
+      <label for="question">Domanda</label>
+      <input
+        type="text"
+        name="question"
+        [(ngModel)]="newQuestion.question"
+        placeholder="Domanda"
+        required
+      />
+    </div>
+
+    <!-- Categoria -->
+    <div class="custom-input">
+      <label for="category_id">Categoria</label>
+      <select
+        name="category_id"
+        id="category_id"
+        required
+        [(ngModel)]="newQuestion.category_id"
+      >
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Opzioni -->
+    <div
+      class="custom-input"
+      *ngFor="let option of newQuestion.options; let i = index"
+    >
+      <label for="option{{ i }}">Opzione {{ i + 1 }}</label>
+      <input
+        type="text"
+        [(ngModel)]="newQuestion.options[i]"
+        name="option{{ i }}"
+        placeholder="Opzione {{ i + 1 }}"
+        required
+      />
+    </div>
+
+    <!-- Risposta corretta -->
+    <div class="custom-input">
+      <label for="correct_answer">Risposta corretta</label>
+      <select
+        name="correct_answer"
+        id="correct_answer"
+        [(ngModel)]="newQuestion.correct_answer"
+        required
+      >
+        <option *ngFor="let option of newQuestion.options" [value]="option">
+          {{ option }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Difficoltà -->
+    <div class="custom-input">
+      <label for="difficulty">Livello di difficoltà</label>
+      <select
+        name="difficulty"
+        id="difficulty"
+        [(ngModel)]="newQuestion.difficulty"
+        (change)="updatePointsBasedOnDifficulty()"
+        required
+      >
+        <option *ngFor="let diff of difficultyOptions" [value]="diff.name">
+          {{ diff.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="btn-group">
+      <button type="submit">{{ editingQuestion ? "Modifica" : "Crea" }}</button>
+      <button
+        type="button"
+        (click)="resetForm(questionForm)"
+        *ngIf="!editingQuestion"
+      >
+        Resetta
+      </button>
+      <button type="button" (click)="cancelEdit()" *ngIf="editingQuestion">
+        Annulla
+      </button>
+    </div>
+  </form>
+
+  <div class="questions-container">
+    <ul>
+      <li *ngFor="let question of questionList">{{ question.question }}</li>
+    </ul>
+  </div>
+</div>

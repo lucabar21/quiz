@@ -25,6 +25,22 @@ export class QuestionsService {
     return this.http.get<Question[]>(`${this.apiUrl}/questions`);
   }
 
+  getQuestion(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  createQuestion(question: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, question);
+  }
+
+  updateQuestion(id: string, question: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, question);
+  }
+
+  deleteQuestion(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
+
   // Recupera le domande per categoria
   getQuestionsByCategory(categoryId: number): Observable<Question[]> {
     return this.http.get<Question[]>(
