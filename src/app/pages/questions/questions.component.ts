@@ -20,6 +20,9 @@ export class QuestionsComponent implements OnInit {
   score: number = 0; // Punteggio totale
   quizCompleted: boolean = false; // Indica se il quiz è completato
 
+  timeLeft: number = 60;
+  timer: any;
+
   constructor(
     private questionsService: QuestionsService,
     private router: Router
@@ -55,11 +58,29 @@ export class QuestionsComponent implements OnInit {
       } else {
         this.currentOptions = this.currentQuestion?.options || [];
       }
+      this.startTimer();
     }
   }
 
+  startTimer(): void {
+    this.timeLeft = 60;
+    clearInterval(this.timer);
+
+    this.timer = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        clearInterval(this.timer);
+        console.log('Tempo scaduto');
+
+        this.selectedAnswer = null;
+        this.nextQuestion();
+      }
+    }, 1000);
+  }
   // Passa alla prossima domanda
   nextQuestion(): void {
+    clearInterval(this.timer);
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
       this.setCurrentQuestion();
@@ -85,7 +106,7 @@ export class QuestionsComponent implements OnInit {
       // Passa alla prossima domanda automaticamente
       setTimeout(() => {
         this.nextQuestion();
-      }, 1000); // Aspetta 1 secondo prima di passare alla prossima domanda
+      }, 500); // Aspetta prima di passare alla prossima domanda
     }
   }
 

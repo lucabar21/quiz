@@ -6,10 +6,11 @@ import {
 } from '../../services/leaderboards.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-results',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, HeaderComponent],
   templateUrl: './results.component.html',
   styleUrl: './results.component.scss',
 })
@@ -46,9 +47,5 @@ export class ResultsComponent implements OnInit {
         console.error('Errore durante il salvataggio del punteggio:', error);
       }
     );
-  }
-
-  goBack(): void {
-    this.router.navigate(['/']); // Torna alla pagina principale del quiz
   }
 }

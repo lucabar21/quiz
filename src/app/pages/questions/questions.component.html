@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <app-timer-chart></app-timer-chart>
+  <app-timer-chart [timeLeft]="timeLeft"></app-timer-chart>
   <div class="question-container" *ngIf="currentQuestion">
     <span>{{ currentQuestion.question }}</span>
   </div>

@@ -1,0 +1,28 @@
+.wrapper {
+  width: 100%;
+  height: calc(100% - 96.7px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  table {
+    width: 70%;
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 10px;
+
+    tr {
+      text-align: center;
+      color: var(--primary-color);
+      th {
+        padding: 0.5rem;
+      }
+      td {
+        border-bottom: 1px solid var(--primary-color);
+        padding: 0.5rem;
+      }
+    }
+  }
+}

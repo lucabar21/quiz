@@ -1,21 +1,23 @@
+<app-header></app-header>
 <div class="wrapper">
   <div class="results-container">
     <h2>Risultati del Quiz</h2>
-    <p>Il tuo punteggio finale è: {{ score }}</p>
-    <button (click)="goBack()">Torna al Quiz</button>
+    <p>Il tuo punteggio finale è:</p>
+    <span>{{ score }}</span>
   </div>
 
   <!-- Form per aggiungere il nome utente -->
   <form (ngSubmit)="submitScore()" *ngIf="!submitted">
-    <label for="user_name">Nome utente:</label>
+    <h4>Vuoi salvare il tuo punteggio?</h4>
     <input
       type="text"
       id="user_name"
       name="user_name"
       [(ngModel)]="userName"
+      placeholder="Nome utente"
       required
     />
-    <button type="submit">Salva punteggio</button>
+    <button type="submit">Salva</button>
   </form>
 
   <!-- Messaggio di conferma -->

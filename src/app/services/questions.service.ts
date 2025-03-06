@@ -30,15 +30,15 @@ export class QuestionsService {
   }
 
   createQuestion(question: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, question);
+    return this.http.post<any>(`${this.apiUrl}/questions`, question);
   }
 
   updateQuestion(id: string, question: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, question);
+    return this.http.put<any>(`${this.apiUrl}/questions/${id}`, question);
   }
 
   deleteQuestion(id: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+    return this.http.delete<any>(`${this.apiUrl}/questions/${id}`);
   }
 
   // Recupera le domande per categoria

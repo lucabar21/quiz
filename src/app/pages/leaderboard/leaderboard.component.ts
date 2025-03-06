@@ -3,10 +3,11 @@ import { LeaderboardsService } from '../../services/leaderboards.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonComponent } from '../../components/button/button.component';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-leaderboard',
-  imports: [CommonModule, ButtonComponent],
+  imports: [CommonModule, HeaderComponent, HeaderComponent],
   templateUrl: './leaderboard.component.html',
   styleUrl: './leaderboard.component.scss',
 })
@@ -28,7 +29,7 @@ export class LeaderboardComponent implements OnInit {
     });
   }
 
-  goBack() {
-    this.router.navigate(['']);
-  }
+  // goHome() {
+  //   this.router.navigate(['']);
+  // }
 }

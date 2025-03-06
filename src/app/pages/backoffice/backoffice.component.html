@@ -1,4 +1,22 @@
+<app-header></app-header>
 <div class="wrapper">
+  <h2>Crea una nuova categoria.</h2>
+  <form #categoryForm="ngForm" (ngSubmit)="createCategory(categoryForm)">
+    <div class="custom-input">
+      <label for="category">Categoria</label>
+      <input
+        type="text"
+        name="category"
+        [(ngModel)]="newCategory.name"
+        placeholder="Esempio"
+        required
+      />
+    </div>
+    <button class="form-btn" type="submit">Crea</button>
+  </form>
+
+  <h2>Crea una nuova domanda.</h2>
+
   <form
     #questionForm="ngForm"
     (ngSubmit)="
@@ -14,7 +32,7 @@
         type="text"
         name="question"
         [(ngModel)]="newQuestion.question"
-        placeholder="Domanda"
+        placeholder="Quanti anni ha *?"
         required
       />
     </div>
@@ -37,14 +55,19 @@
     <!-- Opzioni -->
     <div
       class="custom-input"
-      *ngFor="let option of newQuestion.options; let i = index"
+      *ngFor="
+        let option of newQuestion.options;
+        let i = index;
+        trackBy: trackByIndex
+      "
     >
       <label for="option{{ i }}">Opzione {{ i + 1 }}</label>
       <input
         type="text"
         [(ngModel)]="newQuestion.options[i]"
         name="option{{ i }}"
-        placeholder="Opzione {{ i + 1 }}"
+        id="option{{ i }}"
+        placeholder="{{ i + 1 }}"
         required
       />
     </div>
@@ -81,23 +104,48 @@
     </div>
 
     <div class="btn-group">
-      <button type="submit">{{ editingQuestion ? "Modifica" : "Crea" }}</button>
+      <button class="form-btn" type="submit">
+        {{ editingQuestion ? "Modifica" : "Crea" }}
+      </button>
       <button
+        class="form-btn"
         type="button"
-        (click)="resetForm(questionForm)"
+        (click)="resetQuestionForm(questionForm)"
         *ngIf="!editingQuestion"
       >
         Resetta
       </button>
-      <button type="button" (click)="cancelEdit()" *ngIf="editingQuestion">
+      <button
+        class="form-btn"
+        type="button"
+        (click)="cancelEdit()"
+        *ngIf="editingQuestion"
+      >
         Annulla
       </button>
     </div>
   </form>
 
+  <h2>Elenco delle domande esistenti.</h2>
+
   <div class="questions-container">
     <ul>
-      <li *ngFor="let question of questionList">{{ question.question }}</li>
+      <li *ngFor="let question of questionList">
+        {{ question.question }}
+        <div class="delete-btn" (click)="deleteQuestion(question.id)">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#e3e3e3"
+          >
+            <path
+              d="M280-120q-33 0-56.5-23.5T200-200v-520q-17 0-28.5-11.5T160-760q0-17 11.5-28.5T200-800h160q0-17 11.5-28.5T400-840h160q17 0 28.5 11.5T600-800h160q17 0 28.5 11.5T800-760q0 17-11.5 28.5T760-720v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM400-280q17 0 28.5-11.5T440-320v-280q0-17-11.5-28.5T400-640q-17 0-28.5 11.5T360-600v280q0 17 11.5 28.5T400-280Zm160 0q17 0 28.5-11.5T600-320v-280q0-17-11.5-28.5T560-640q-17 0-28.5 11.5T520-600v280q0 17 11.5 28.5T560-280ZM280-720v520-520Z"
+            />
+          </svg>
+        </div>
+      </li>
     </ul>
   </div>
 </div>

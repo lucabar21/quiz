@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Question, QuestionsService } from '../../services/questions.service';
 import { CommonModule } from '@angular/common';
-import { CategoryService } from '../../services/category.service';
+import { Category, CategoryService } from '../../services/category.service';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-backoffice',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, HeaderComponent, HeaderComponent],
   templateUrl: './backoffice.component.html',
   styleUrl: './backoffice.component.scss',
 })
@@ -24,6 +25,9 @@ export class BackofficeComponent implements OnInit {
     points: 1,
   };
 
+  newCategory: Category = {
+    name: '',
+  };
   categories: any[] = [];
 
   difficultyOptions = [
@@ -60,13 +64,27 @@ export class BackofficeComponent implements OnInit {
     });
   }
 
+  createCategory(form: NgForm) {
+    if (form.valid) {
+      console.log('Nuova categoria:', this.newCategory);
+      this.categoryService.createCategory(this.newCategory).subscribe({
+        next: (data) => {
+          this.categories.push(data);
+          this.resetCategoryForm(form);
+          alert('Categoria creata con successo!');
+        },
+      });
+    }
+  }
+
   createQuestion(form: NgForm) {
     if (form.valid) {
       console.log('Nuova domanda:', this.newQuestion);
       this.questionService.createQuestion(this.newQuestion).subscribe({
         next: (data) => {
           this.questionList.push(data);
-          this.resetForm(form);
+          this.resetQuestionForm(form);
+          alert('Domanda creata con successo!');
         },
         error: (err) =>
           console.error('Errore nella creazioe della domanda', err),
@@ -109,7 +127,7 @@ export class BackofficeComponent implements OnInit {
   }
 
   // **Resetta il form**
-  resetForm(form: NgForm) {
+  resetQuestionForm(form: NgForm) {
     this.newQuestion = {
       id: 0,
       category_id: 0,
@@ -118,6 +136,13 @@ export class BackofficeComponent implements OnInit {
       correct_answer: '',
       difficulty: 'easy',
       points: 0,
+    };
+    form.resetForm();
+  }
+
+  resetCategoryForm(form: NgForm) {
+    this.newCategory = {
+      name: '',
     };
     form.resetForm();
   }
@@ -140,6 +165,10 @@ export class BackofficeComponent implements OnInit {
     } else {
       this.newQuestion.question = value;
     }
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index; // Ritorna l'indice per associare ogni input correttamente
   }
 
   // Metodo per aggiornare i punti in base alla difficoltà selezionata

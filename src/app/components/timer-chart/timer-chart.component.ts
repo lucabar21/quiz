@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 @Component({
   selector: 'app-timer-chart',
@@ -7,7 +13,7 @@ import { Chart, registerables } from 'chart.js';
   styleUrl: './timer-chart.component.scss',
 })
 export class TimerChartComponent implements OnInit, OnDestroy {
-  public timeLeft = 60;
+  @Input() timeLeft: number = 60;
   private interval: any;
   private chart: any;
 
@@ -16,7 +22,12 @@ export class TimerChartComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     Chart.register(...registerables);
     this.createChart();
-    this.startTimer();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['timeLeft'] && this.chart) {
+      this.updateChart();
+    }
   }
 
   createChart() {
@@ -27,7 +38,7 @@ export class TimerChartComponent implements OnInit, OnDestroy {
       data: {
         datasets: [
           {
-            data: [0, this.timeLeft],
+            data: [60 - this.timeLeft, this.timeLeft],
             backgroundColor: ['#D0BDDB', '#613F75'],
             borderWidth: 0,
           },
@@ -42,23 +53,14 @@ export class TimerChartComponent implements OnInit, OnDestroy {
     });
   }
 
-  startTimer() {
-    this.interval = setInterval(() => {
-      if (this.timeLeft > 0) {
-        this.timeLeft--;
-        this.updateChart();
-      } else {
-        clearInterval(this.interval);
-      }
-    }, 1000);
-  }
-
   updateChart() {
     this.chart.data.datasets[0].data = [60 - this.timeLeft, this.timeLeft];
     this.chart.update();
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.interval);
+    if (this.chart) {
+      this.chart.destroy(); // Distrugge il grafico per evitare memory leaks
+    }
   }
 }
